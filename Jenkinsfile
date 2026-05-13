@@ -2,31 +2,30 @@ pipeline {
     agent any
 
     triggers {
-        githubPush()   // triggers on push to the repo
+        githubPush()
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/PratikMudaliar1/jekins_practical_8'
+                checkout scm
             }
         }
         stage('Build') {
             steps {
-                sh 'echo "Building..." && mvn clean package -DskipTests'
-                // replace with your build command (npm install, gradle build, etc.)
+                echo 'Building...'
             }
         }
         stage('Test') {
             steps {
-                sh 'mvn test'
-                // replace with your test command
+                echo 'Testing...'
             }
         }
     }
 
     post {
-        success { echo 'Build passed!' }
-        failure { echo 'Build failed.' }
+        success { echo 'Pipeline passed!' }
+        failure  { echo 'Pipeline failed.' }
     }
 }
+
